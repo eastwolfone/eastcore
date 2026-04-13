@@ -15,11 +15,12 @@ and (planned) Claude API-powered bot dialogue via mod-llm-chatter.
 - `C:\Users\Logan\Desktop\Projects\EastCore\client\` — WoW 3.3.5a client (Windows side)
 
 ## Key Paths
-- Server binaries: `~/eastcore/build/bin/`
-- Server configs: `~/eastcore/build/bin/configs/`
-- Module configs: `~/eastcore/build/bin/configs/modules/`
-- Lua scripts deploy to: `~/eastcore/build/bin/lua_scripts/`
+- Server binaries: `~/eastcore/build/install/bin/`
+- Server configs: `~/eastcore/build/install/etc/`
+- Module configs: `~/eastcore/build/install/etc/modules/`
+- Lua scripts deploy to: `~/eastcore/build/install/bin/lua_scripts/`
 - Community modules: `~/eastcore/azerothcore/modules/`
+- Map/client data: `~/eastcore/build/install/bin/data/`
 
 ## Build Commands
 
@@ -82,7 +83,7 @@ Community modules are independent git repos in `azerothcore/modules/`.
 - Module versions tracked in: `custom/tools/module-manifest.json`
 
 ### Installed Modules
-**Tier 1 (Essential):** mod-playerbots, mod-autobalance, mod-solo-lfg, mod-eluna-lua-engine
+**Tier 1 (Essential):** mod-playerbots, mod-autobalance, mod-solo-lfg, mod-ale (AzerothCore Lua Engine)
 **Tier 2 (QoL):** mod-transmog, mod-ah-bot, mod-npc-enchanter, mod-npc-buffer
 **Tier 3 (LLM, planned):** mod-llm-chatter (Claude API / Ollama)
 

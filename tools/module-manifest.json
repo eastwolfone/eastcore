@@ -9,13 +9,13 @@
       "enabled": true,
       "notes": "Core bot system. Requires the mod-playerbots AC fork."
     },
-    "mod-eluna-lua-engine": {
-      "repo": "https://github.com/azerothcore/mod-eluna-lua-engine.git",
+    "mod-ale": {
+      "repo": "https://github.com/azerothcore/mod-eluna.git",
       "branch": "master",
       "pinned_commit": null,
       "tier": 1,
       "enabled": true,
-      "notes": "Lua scripting engine for custom gameplay scripts."
+      "notes": "AzerothCore Lua Engine (ALE). Clone as 'mod-ale' — the AC build system requires this directory name."
     },
     "mod-autobalance": {
       "repo": "https://github.com/azerothcore/mod-autobalance.git",
