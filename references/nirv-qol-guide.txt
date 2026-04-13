@@ -1,0 +1,50 @@
+nirv's AzerothCore Quality of Life (QoL) Changes
+Source: Community guide (saved 2026-04-13)
+Updated: 2026-02-07
+
+Official Discord for mod-playerbots: https://discord.com/invite/NQm5QShwf9
+Official Discord for AzerothCore: https://discordapp.com/invite/gkt4y2x
+Official AzerothCore GitHub: https://github.com/azerothcore/azerothcore-wotlk
+Official Mod-Playerbots GitHub: https://github.com/mod-playerbots/mod-playerbots
+
+=== KEY TAKEAWAYS ===
+
+Config Updates:
+- When updating AzerothCore, config files (.conf) are NOT updated automatically
+- You must manually copy .conf.dist -> .conf and re-apply your changes
+- EastCore approach: store config overlays in custom/configs/ for version control
+
+Build Troubleshooting (escalation):
+1. Clean build: rm -rf build directory, rebuild
+2. Delete suspect module folders, rebuild
+3. Reset source: cd azerothcore && git restore ./
+4. Reset playerbots: cd modules/mod-playerbots && git restore ./
+5. Full reinstall: backup DB, re-clone, rebuild, reimport
+
+QoL Source Patches (optional, apply as git commits on dev branch):
+- Disable LFG cooldowns/dungeon deserter: comment out in LFGMgr.cpp
+- Disable hunter pet happiness decay: comment out in Pet.cpp
+- See full details in nirv's original guide
+
+Playerbot Tips:
+- .playerbot bot init=auto — cycle bot spec + level up
+- /p attack — all bots attack target
+- /w BOTNAME talents spec [spec] [pve/pvp] — set specific spec
+- /w BOTNAME maintenance && autogear — bot self-manages
+- /w HEALERBOT nc -dps assist — healer focuses on healing only
+- /w BOTNAME co +cc — enable crowd control
+- /w BOTNAME co -save mana — disable mana conservation
+- /w BOTNAME los — list nearby interactable objects
+- /w BOTNAME u [Object Name] — interact with object
+
+Useful In-Game:
+- /console ffxglow 0 — disable full-screen glow effect
+- Bartender4 addon for easy keybinding
+
+Macro Pattern (stops swoosh sound, auto-targets):
+  #showtooltip
+  /console Sound_EnableSFX 0
+  /cast Ability Name
+  /startattack
+  /script UIErrorsFrame:Clear();
+  /console Sound_EnableSFX 1

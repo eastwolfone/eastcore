@@ -1,0 +1,32 @@
+# Build artifacts
+*.exe
+*.dll
+*.pdb
+*.obj
+*.o
+*.so
+
+# IDE
+.vs/
+.vscode/
+*.suo
+*.user
+.idea/
+
+# Secrets and API keys
+*.secret
+*.key
+api-keys.json
+.env
+
+# Backups (stored outside this repo)
+backups/
+
+# Python virtual environments
+venv/
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store
+Thumbs.db

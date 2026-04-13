@@ -1,0 +1,77 @@
+{
+  "description": "EastCore module manifest — tracks installed community modules and pinned versions",
+  "modules": {
+    "mod-playerbots": {
+      "repo": "https://github.com/mod-playerbots/mod-playerbots.git",
+      "branch": "master",
+      "pinned_commit": null,
+      "tier": 1,
+      "enabled": true,
+      "notes": "Core bot system. Requires the mod-playerbots AC fork."
+    },
+    "mod-eluna-lua-engine": {
+      "repo": "https://github.com/azerothcore/mod-eluna-lua-engine.git",
+      "branch": "master",
+      "pinned_commit": null,
+      "tier": 1,
+      "enabled": true,
+      "notes": "Lua scripting engine for custom gameplay scripts."
+    },
+    "mod-autobalance": {
+      "repo": "https://github.com/azerothcore/mod-autobalance.git",
+      "branch": "master",
+      "pinned_commit": null,
+      "tier": 1,
+      "enabled": true,
+      "notes": "Dynamically scales dungeon/raid difficulty to party size."
+    },
+    "mod-solo-lfg": {
+      "repo": "https://github.com/azerothcore/mod-solo-lfg.git",
+      "branch": "master",
+      "pinned_commit": null,
+      "tier": 1,
+      "enabled": true,
+      "notes": "Enables dungeon finder for solo or small groups."
+    },
+    "mod-transmog": {
+      "repo": "https://github.com/azerothcore/mod-transmog.git",
+      "branch": "master",
+      "pinned_commit": null,
+      "tier": 2,
+      "enabled": true,
+      "notes": "Transmogrification system for gear appearances."
+    },
+    "mod-ah-bot": {
+      "repo": "https://github.com/azerothcore/mod-ah-bot.git",
+      "branch": "master",
+      "pinned_commit": null,
+      "tier": 2,
+      "enabled": true,
+      "notes": "Populates auction house with bot listings."
+    },
+    "mod-npc-enchanter": {
+      "repo": "https://github.com/azerothcore/mod-npc-enchanter.git",
+      "branch": "master",
+      "pinned_commit": null,
+      "tier": 2,
+      "enabled": true,
+      "notes": "NPC enchanting service."
+    },
+    "mod-npc-buffer": {
+      "repo": "https://github.com/azerothcore/mod-npc-buffer.git",
+      "branch": "master",
+      "pinned_commit": null,
+      "tier": 2,
+      "enabled": true,
+      "notes": "One-click buff NPC."
+    }
+  },
+  "planned": {
+    "mod-llm-chatter": {
+      "repo": "https://github.com/Hokken/mod-llm-chatter.git",
+      "branch": "master",
+      "tier": 3,
+      "notes": "LLM-powered bot dialogue. Supports Anthropic Claude API, OpenAI, Ollama."
+    }
+  }
+}
