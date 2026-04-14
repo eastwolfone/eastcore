@@ -90,7 +90,8 @@ Community modules are independent git repos in `azerothcore/modules/`.
 ## Lua Scripting (Eluna)
 - Write scripts in `custom/lua/scripts/` (version controlled)
 - Deploy to `build/bin/lua_scripts/` with `custom/tools/deploy-lua.sh`
-- Hot-reload in-game: `.reload eluna`
+- Hot-reload in-game: `.reload ale` (NOT `.reload eluna` — ALE is a different engine)
+- Auto-reload: enabled — saving a .lua file to lua_scripts/ triggers reload within 1 second
 - Eluna API docs: https://www.azerothcore.org/pages/eluna/
 
 ## Running the Server
