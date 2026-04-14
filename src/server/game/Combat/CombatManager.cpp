@@ -293,41 +293,46 @@ void CombatManager::InheritCombatStatesFrom(Unit const* who)
 
 void CombatManager::EndCombatBeyondRange(float range, bool includingPvP)
 {
-    // Collect refs to end first, then end them -- EndCombat triggers AI callbacks
-    // that can re-enter and modify _pveRefs/_pvpRefs during iteration.
-    std::vector<CombatReference*> toEnd;
-
-    auto it = _pveRefs.begin(), end = _pveRefs.end();
-    while (it != end)
+    // Erase one at a time, call EndCombat, then restart iteration.
+    // EndCombat triggers AI callbacks that can modify _pveRefs/_pvpRefs
+    // (re-entrancy) and can also free units referenced by other entries
+    // (stale pointers). Restarting after each ensures fresh iterators
+    // and valid refs. O(n^2) but safe.
+    bool found;
+    do
     {
-        CombatReference* const ref = it->second;
-        if (!ref->first->IsWithinDistInMap(ref->second, range))
+        found = false;
+        for (auto it = _pveRefs.begin(); it != _pveRefs.end(); ++it)
         {
-            it = _pveRefs.erase(it), end = _pveRefs.end();
-            toEnd.push_back(ref);
-        }
-        else
-            ++it;
-    }
-
-    if (includingPvP)
-    {
-        auto it2 = _pvpRefs.begin(), end2 = _pvpRefs.end();
-        while (it2 != end2)
-        {
-            CombatReference* const ref = it2->second;
+            CombatReference* const ref = it->second;
             if (!ref->first->IsWithinDistInMap(ref->second, range))
             {
-                it2 = _pvpRefs.erase(it2), end2 = _pvpRefs.end();
-                toEnd.push_back(ref);
+                _pveRefs.erase(it);
+                ref->EndCombat();
+                found = true;
+                break;
             }
-            else
-                ++it2;
         }
-    }
+    } while (found);
 
-    for (CombatReference* ref : toEnd)
-        ref->EndCombat();
+    if (!includingPvP)
+        return;
+
+    do
+    {
+        found = false;
+        for (auto it = _pvpRefs.begin(); it != _pvpRefs.end(); ++it)
+        {
+            CombatReference* const ref = it->second;
+            if (!ref->first->IsWithinDistInMap(ref->second, range))
+            {
+                _pvpRefs.erase(it);
+                ref->EndCombat();
+                found = true;
+                break;
+            }
+        }
+    } while (found);
 }
 
 void CombatManager::SuppressPvPCombat()
