@@ -32,6 +32,7 @@
 #include "ThreatManager.h"
 #include "Unit.h"
 #include "UnitAI.h"
+#include <vector>
 
 /*static*/ bool CombatManager::CanBeginCombat(Unit const* a, Unit const* b)
 {
@@ -292,34 +293,41 @@ void CombatManager::InheritCombatStatesFrom(Unit const* who)
 
 void CombatManager::EndCombatBeyondRange(float range, bool includingPvP)
 {
+    // Collect refs to end first, then end them -- EndCombat triggers AI callbacks
+    // that can re-enter and modify _pveRefs/_pvpRefs during iteration.
+    std::vector<CombatReference*> toEnd;
+
     auto it = _pveRefs.begin(), end = _pveRefs.end();
     while (it != end)
     {
         CombatReference* const ref = it->second;
         if (!ref->first->IsWithinDistInMap(ref->second, range))
         {
-            it = _pveRefs.erase(it), end = _pveRefs.end(); // erase manually here to avoid iterator invalidation
-            ref->EndCombat();
+            it = _pveRefs.erase(it), end = _pveRefs.end();
+            toEnd.push_back(ref);
         }
         else
             ++it;
     }
 
-    if (!includingPvP)
-        return;
-
-    auto it2 = _pvpRefs.begin(), end2 = _pvpRefs.end();
-    while (it2 != end2)
+    if (includingPvP)
     {
-        CombatReference* const ref = it2->second;
-        if (!ref->first->IsWithinDistInMap(ref->second, range))
+        auto it2 = _pvpRefs.begin(), end2 = _pvpRefs.end();
+        while (it2 != end2)
         {
-            it2 = _pvpRefs.erase(it2), end2 = _pvpRefs.end(); // erase manually here to avoid iterator invalidation
-            ref->EndCombat();
+            CombatReference* const ref = it2->second;
+            if (!ref->first->IsWithinDistInMap(ref->second, range))
+            {
+                it2 = _pvpRefs.erase(it2), end2 = _pvpRefs.end();
+                toEnd.push_back(ref);
+            }
+            else
+                ++it2;
         }
-        else
-            ++it2;
     }
+
+    for (CombatReference* ref : toEnd)
+        ref->EndCombat();
 }
 
 void CombatManager::SuppressPvPCombat()
